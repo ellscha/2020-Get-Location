@@ -15,6 +15,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     let locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.requestAlwaysAuthorization()
@@ -22,6 +23,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.setUpMapView()
         }
     
+    // function to set up the delegate as a protocol
     func setupLocationManager() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
@@ -30,6 +32,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    // function to set up map view.
     func setUpMapView() {
         mapView.showsUserLocation = true
         mapView.showsCompass = true
@@ -37,10 +40,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.setupLocationManager()
     }
     
+    // location manager function to update location, added in map updates to the function as well.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude), \(locValue.longitude)")
-        let currentLocation = locValue
+        
         let coordinateRegion = MKCoordinateRegion(center: locValue, latitudinalMeters: 300, longitudinalMeters: 300)
         mapView.setRegion(coordinateRegion, animated: true)
     }
